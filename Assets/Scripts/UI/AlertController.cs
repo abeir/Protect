@@ -4,6 +4,7 @@ using Common.Helper;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 namespace UI
 {
@@ -14,8 +15,13 @@ namespace UI
     [Serializable]
     public class AlertDialogParameter
     {
+        /// <summary>
+        /// 对话框飞入的来源方向
+        /// </summary>
         public AlertOperator.FlyInDirection FlyInDirection = AlertOperator.FlyInDirection.None;
-
+        /// <summary>
+        /// 对话框飞速的时长
+        /// </summary>
         public float FlyInDuration;
         /// <summary>
         /// 对话框标题
@@ -25,8 +31,18 @@ namespace UI
         /// 对话框内容
         /// </summary>
         public string Content;
+        /// <summary>
+        /// 确认按钮的文本
+        /// </summary>
         public string OkText;
+        /// <summary>
+        /// 取消按钮的文本
+        /// </summary>
         public string CancelText;
+        /// <summary>
+        /// 是否允许点击模态框背景时关闭对话框
+        /// </summary>
+        public bool ClickModalClose;
         /// <summary>
         /// 按下确定按钮的回调
         /// </summary>
@@ -89,6 +105,14 @@ namespace UI
             info.OkCallback = param.OkCallback;
             info.CancelCallback = param.CancelCallback;
 
+            if (param.ClickModalClose)
+            {
+                // 设置点击到模态框背景时的回调
+                var modalController = info.Modal.GetComponent<ModalController>();
+                modalController.UserData = info.ID;
+                modalController.OnClick += OnModalClicked;
+            }
+
             var alertOperator = info.Alert.GetComponent<AlertOperator>();
             info.Operator = alertOperator;
 
@@ -120,6 +144,11 @@ namespace UI
         /// <param name="id">对话框ID，创建对话框时会返回ID</param>
         public void Close(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                Debug.LogWarning("alert dialog id is empty");
+                return;
+            }
             var info = alertDialogs.Find(i => i.ID == id);
             info?.Operator.Hide();
         }
@@ -141,13 +170,14 @@ namespace UI
 
         private AlertDialogInfo Create()
         {
+            var id = Strings.Uuid();
+
             var modal = Instantiate(modalPrefab, transform);
             modal.gameObject.SetActive(false);
 
             var alert = Instantiate(alertPrefab, transform);
             alert.gameObject.SetActive(false);
 
-            var id = Strings.Uuid();
             var info = new AlertDialogInfo
             {
                 ID = id,
@@ -175,6 +205,17 @@ namespace UI
             Destroy(dialog.Alert.gameObject);
 
             dialog.Dispose();
+        }
+
+        // 点击模态框背景时关闭对话框
+        private void OnModalClicked(PointerEventData data, object userData)
+        {
+            if (userData == null)
+            {
+                Debug.LogWarning("invalid userData, expect a alert dialog id");
+                return;
+            }
+            Close(userData as string);
         }
     }
 }

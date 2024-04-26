@@ -2,7 +2,6 @@
 using Common.Singleton;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace UI
 {
@@ -16,6 +15,10 @@ namespace UI
         [SerializeField]
         private RectTransform alertDialogRoot;
 
+        [Title("Toast")]
+        [SerializeField]
+        private RectTransform toastRoot;
+
         [Title("Controlled")]
         [SerializeField]
         private List<CanvasGroup> controlledCanvasGroups;
@@ -23,12 +26,17 @@ namespace UI
 
         private MenuController menuController;
         private AlertController alertController;
+        private ToastController toastController;
 
         private void Start()
         {
             InitMenuDialog();
             InitAlertDialog();
+            InitToast();
         }
+
+
+        #region Menu
 
         public void OpenMenu(MenuDialogParameter param)
         {
@@ -52,6 +60,16 @@ namespace UI
             }
         }
 
+        private void InitMenuDialog()
+        {
+            menuController = menuDialogRoot.GetComponent<MenuController>();
+            menuController.gameObject.SetActive(false);
+        }
+
+        #endregion
+
+        #region Alert
+
         public string OpenAlert(AlertDialogParameter param)
         {
             alertController.gameObject.SetActive(true);
@@ -69,12 +87,29 @@ namespace UI
             alertDialogRoot.gameObject.SetActive(false);
         }
 
+        #endregion
 
-        private void InitMenuDialog()
+
+        #region Toast
+
+        public void OpenToast(string message, ToastDuration duration = ToastDuration.Normal)
         {
-            menuController = menuDialogRoot.GetComponent<MenuController>();
-            menuController.gameObject.SetActive(false);
+            toastController.Open(message,duration);
         }
+
+        public void OpenToast(string message, float duration)
+        {
+            toastController.Open(message,duration);
+        }
+
+        private void InitToast()
+        {
+            toastController = toastRoot.GetComponent<ToastController>();
+        }
+
+        #endregion
+
+
 
     }
 }
