@@ -23,7 +23,7 @@ namespace UI
 
         [Title("Toast Settings")]
         [SerializeField]
-        private float toastHorizontalMargin;
+        private float toastHorizontalMargin = 40f;
         [SerializeField]
         private float backgroundOpacity = 0.6f;        // 背景的不透明度
         [SerializeField]
@@ -66,10 +66,10 @@ namespace UI
             tweenSequence.Kill();
         }
 
-        private void Update()
-        {
-            toastRoot.sizeDelta = ComputeToastSize();
-        }
+        // private void Update()
+        // {
+        //     toastRoot.sizeDelta = ComputeToastSize();
+        // }
 
 
         public ToastOperator SetMessage(string msg)
@@ -97,12 +97,20 @@ namespace UI
                 ResetTweenSequence();
             }
             tweenSequence.Restart();
+
+            IntervalPerFrame.Create(this)
+                .SetTimes(2)
+                .SetCallback(() =>
+                {
+                    toastRoot.sizeDelta = ComputeToastSize();
+                })
+                .Start();
         }
 
         private Vector2 ComputeToastSize()
         {
             // toast 允许的最大宽度
-            var maxToastWidth = Systems.ReferenceResolution.x - 2 * toastHorizontalMargin;
+            var maxToastWidth = Systems.Instance.ReferenceResolution.x - 2 * toastHorizontalMargin;
             // 计算 toast 预期的宽高
             var expectToastWidth = text.preferredWidth + 2 * horizontalPadding;
             var expectToastHeight = text.preferredHeight + 2 * verticalPadding;

@@ -30,6 +30,7 @@ namespace UI
         /// <summary>
         /// 对话框内容
         /// </summary>
+        [TextArea(2, 5)]
         public string Content;
         /// <summary>
         /// 确认按钮的文本
@@ -129,12 +130,13 @@ namespace UI
                 Dispose(info.ID);
             };
 
+            info.Modal.gameObject.SetActive(true);
+            info.Alert.gameObject.SetActive(true);
+
             alertOperator.Show(
                 param.FlyInDirection == AlertOperator.FlyInDirection.None ? defaultFlyInDirection : param.FlyInDirection,
                 param.FlyInDuration > 0 ? param.FlyInDuration : defaultFlyInDuration);
 
-            info.Modal.gameObject.SetActive(true);
-            info.Alert.gameObject.SetActive(true);
             return info.ID;
         }
 

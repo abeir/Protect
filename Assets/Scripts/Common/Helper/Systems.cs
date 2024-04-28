@@ -1,9 +1,15 @@
-﻿using UnityEngine;
+﻿using Common.Singleton;
+using UnityEngine;
 
 namespace Common.Helper
 {
-    public static class Systems
+    public class Systems : OrdinarySingleton<Systems>, ISingletonEvent
     {
-        public static readonly Vector2 ReferenceResolution = new Vector2(1080, 1920);
+        public Vector2 ReferenceResolution { get; private set; }
+
+        public void OnCreate()
+        {
+            ReferenceResolution = new Vector2(1080, 1920);
+        }
     }
 }

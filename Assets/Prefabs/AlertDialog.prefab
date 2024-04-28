@@ -304,6 +304,10 @@ MonoBehaviour:
   dialogRoot: {fileID: 2268655195290136513}
   ok: {fileID: 7326871619688150471}
   cancel: {fileID: 450248452118261000}
+  minSize:
+    width: 600
+    height: 480
+  minHorizontalMargin: 80
 --- !u!1 &2753195387160676452
 GameObject:
   m_ObjectHideFlags: 0

@@ -32,5 +32,10 @@ namespace Common.Helper
         {
             return Mathf.Abs(a - b) <= TinyNum;
         }
+
+        public static bool NearEpsilon(float a, float b)
+        {
+            return Mathf.Abs(a - b) <= Mathf.Epsilon;
+        }
     }
 }

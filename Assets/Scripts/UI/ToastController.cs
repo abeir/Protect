@@ -23,9 +23,9 @@ namespace UI
         {
             var toast = Create();
             toast.SetMessage(message).SetDuration(duration);
-            toast.Show();
 
             toast.gameObject.SetActive(true);
+            toast.Show();
         }
 
         public void Open(string message, ToastDuration toastDuration)
