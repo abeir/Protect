@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace UI
+namespace UI.Dialog
 {
     public enum ToastDuration
     {

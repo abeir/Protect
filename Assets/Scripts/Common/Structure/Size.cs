@@ -77,6 +77,36 @@ namespace Common.Structure
         {
             return !(a == b);
         }
+
+        public static Size operator +(Size a, int b)
+        {
+            return new Size(a.width + b, a.height + b);
+        }
+
+        public static Size operator +(Size a, Size b)
+        {
+            return new Size(a.width + b.width, a.height + b.height);
+        }
+
+        public static Size operator -(Size a, int b)
+        {
+            return new Size(a.width - b, a.height - b);
+        }
+
+        public static Size operator -(Size a, Size b)
+        {
+            return new Size(a.width - b.width, a.height - b.height);
+        }
+
+        public static Size operator *(Size a, int b)
+        {
+            return new Size(a.width * b, a.height * b);
+        }
+
+        public static Size operator /(Size a, int b)
+        {
+            return new Size(a.width / b, a.height / b);
+        }
     }
 
     [Serializable]
@@ -148,6 +178,36 @@ namespace Common.Structure
         public static bool operator !=(SizeF a, SizeF b)
         {
             return !(a == b);
+        }
+
+        public static SizeF operator +(SizeF a, float b)
+        {
+            return new SizeF(a.width + b, a.height + b);
+        }
+
+        public static SizeF operator +(SizeF a, SizeF b)
+        {
+            return new SizeF(a.width + b.width, a.height + b.height);
+        }
+
+        public static SizeF operator -(SizeF a, float b)
+        {
+            return new SizeF(a.width - b, a.height - b);
+        }
+
+        public static SizeF operator -(SizeF a, SizeF b)
+        {
+            return new SizeF(a.width - b.width, a.height - b.height);
+        }
+
+        public static SizeF operator /(SizeF a, float b)
+        {
+            return new SizeF(a.width / b, a.height / b);
+        }
+
+        public static SizeF operator *(SizeF a, float b)
+        {
+            return new SizeF(a.width * b, a.height * b);
         }
     }
 

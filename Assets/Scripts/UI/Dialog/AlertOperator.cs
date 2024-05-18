@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.Dialog
 {
     public class AlertOperator : MonoBehaviour
     {

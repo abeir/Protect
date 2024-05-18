@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.Dialog
 {
     public class ToastOperator : MonoBehaviour
     {
@@ -65,11 +65,6 @@ namespace UI
         {
             tweenSequence.Kill();
         }
-
-        // private void Update()
-        // {
-        //     toastRoot.sizeDelta = ComputeToastSize();
-        // }
 
 
         public ToastOperator SetMessage(string msg)

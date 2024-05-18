@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace UI
+namespace UI.Dialog
 {
     /// <summary>
     /// 打开菜单时需要传入的参数

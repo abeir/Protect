@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace UI
+namespace UI.Common
 {
     public class ModalController : MonoBehaviour, IPointerClickHandler
     {

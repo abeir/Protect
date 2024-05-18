@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using Common.Helper;
 using Sirenix.OdinInspector;
+using UI.Common;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace UI
+namespace UI.Dialog
 {
 
     /// <summary>

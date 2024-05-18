@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using Common.Singleton;
 using Sirenix.OdinInspector;
+using UI.Dialog;
+using UI.Menu;
 using UnityEngine;
 
 namespace UI
@@ -19,12 +21,8 @@ namespace UI
         [SerializeField]
         private RectTransform toastRoot;
 
-        [Title("Controlled")]
-        [SerializeField]
-        private List<CanvasGroup> controlledCanvasGroups;
 
-
-        private MenuController menuController;
+        private Menu.MenuController menuController;
         private AlertController alertController;
         private ToastController toastController;
 
@@ -38,32 +36,19 @@ namespace UI
 
         #region Menu
 
-        public void OpenMenu(MenuDialogParameter param)
+        public void OpenMenu(MenuParameter param)
         {
-            menuController.gameObject.SetActive(true);
             menuController.Open(param);
-
-            // 阻止其他canvas响应点击
-            foreach (var grp in controlledCanvasGroups)
-            {
-                grp.blocksRaycasts = false;
-            }
         }
 
         public void CloseMenu()
         {
             menuController.Close();
-            // 恢复其他canvas响应点击
-            foreach (var grp in controlledCanvasGroups)
-            {
-                grp.blocksRaycasts = true;
-            }
         }
 
         private void InitMenuDialog()
         {
-            menuController = menuDialogRoot.GetComponent<MenuController>();
-            menuController.gameObject.SetActive(false);
+            menuController = menuDialogRoot.GetComponent<Menu.MenuController>();
         }
 
         #endregion

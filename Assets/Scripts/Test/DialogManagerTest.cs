@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UI;
+using UI.Dialog;
+using UI.Menu;
 using UnityEngine;
 
 namespace Test
@@ -11,31 +13,18 @@ namespace Test
 
         private readonly Stack<string> alertDialogIds = new();
 
-        [BoxGroup("Menu Dialog", centerLabel: true)]
-        [SerializeField]
-        private bool useMenuDefault = true;
         [BoxGroup("Menu Dialog")]
-        [SerializeField, HideIf("useMenuDefault")]
-        private MenuDialogParameter menuDialogParameter;
-
+        [SerializeField]
+        private MenuType menuType;
         [BoxGroup("Menu Dialog")]
         [Button]
         private void OpenMenuDialog()
         {
-            if (useMenuDefault)
+            DialogManager.Instance.OpenMenu(new MenuParameter
             {
-                DialogManager.Instance.OpenMenu(new MenuDialogParameter
-                {
-                    AddCallback = OnClickMenuAdd,
-                    QuitCallback = OnClickMenuQuit
-                });
-            }
-            else
-            {
-                menuDialogParameter.AddCallback = OnClickMenuAdd;
-                menuDialogParameter.QuitCallback = OnClickMenuQuit;
-                DialogManager.Instance.OpenMenu(menuDialogParameter);
-            }
+                Type = menuType,
+                OnClickItem = OnClickMenuItem
+            });
         }
 
         [BoxGroup("Menu Dialog")]
@@ -120,14 +109,9 @@ namespace Test
             Debug.Log("DialogManagerTest.OnClickAlertCancel");
         }
 
-        private void OnClickMenuAdd()
+        private void OnClickMenuItem(int index)
         {
-            Debug.Log("DialogManagerTest.OnClickMenuAdd");
-        }
-
-        private void OnClickMenuQuit()
-        {
-            Debug.Log("DialogManagerTest.OnClickMenuQuit");
+            Debug.Log($"DialogManagerTest.OnClickMenuItem index:{index}");
         }
     }
 }
